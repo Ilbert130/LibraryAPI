@@ -19,7 +19,7 @@ namespace PruebeVC.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Autor>>> Get()
         {
-            var listAutor = await context.Autores.ToListAsync();
+            var listAutor = await context.Autores.Include(a => a.Libros).ToListAsync();
             return listAutor;
         }
 

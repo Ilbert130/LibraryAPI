@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "2799a40d-257d-4615-8ee9-db20c514ff62": {
+      "ProjectGuid": "2799a40d-257d-4615-8ee9-db20c514ff62",
+      "DisplayName": "PruebeVC",
+      "ColorIndex": 0
+    },
+    "b4144c93-eb15-4354-90fd-291dfa5335ee": {
+      "ProjectGuid": "b4144c93-eb15-4354-90fd-291dfa5335ee",
+      "DisplayName": "PruebeVC",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

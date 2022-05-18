@@ -5,7 +5,7 @@ using PruebeVC.Models;
 namespace PruebeVC.Controllers
 {
     [ApiController]
-    [Route("api/autores")]
+    [Route("api/autores")] // api/autores => Route
     public class AutoresController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -16,7 +16,21 @@ namespace PruebeVC.Controllers
 
         }
 
+        /* [HttpGet("Data")]
+        public List<Autor> GetAutors()
+        {
+            return context.Autores.ToList();
+        } */
+
+        [HttpGet("{id:int}/{name?}")] // api/autores/id => Route
+        public async Task<ActionResult<Autor>> Get(int id, string name)
+        {
+            return await context.Autores.Include(a => a.Libros).FirstOrDefaultAsync( a => a.Id == id || a.Nombre.Contains(name));
+        }
+
         [HttpGet]
+        [HttpGet("listado")] // api/autores/listado => Route
+        [HttpGet("/listado")] // listtado => Route
         public async Task<ActionResult<List<Autor>>> Get()
         {
             var listAutor = await context.Autores.Include(a => a.Libros).ToListAsync();
@@ -26,6 +40,13 @@ namespace PruebeVC.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(Autor autor)
         {
+            var exiteAutorConElMismoNombre = await context.Autores.AnyAsync( a => a.Nombre == autor.Nombre );
+
+            if(exiteAutorConElMismoNombre)
+            {
+                return BadRequest("Ya exite el registro a crear");
+            }
+
             context.Add(autor);
             await context.SaveChangesAsync();
             return Ok();

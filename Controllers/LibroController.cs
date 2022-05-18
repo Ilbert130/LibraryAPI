@@ -5,7 +5,7 @@ using PruebeVC.Models;
 namespace PruebeVC.Controllers
 {
     [ApiController]
-    [Route("api/libro")]
+    [Route("api/libros")]
     public class LibroController : ControllerBase
     {
         private readonly ApplicationDbContext context;

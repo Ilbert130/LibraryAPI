@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PruebeVC.Models;
+using PruebeVC.Servicios;
 
 namespace PruebeVC.Controllers
 {
@@ -9,23 +10,42 @@ namespace PruebeVC.Controllers
     public class AutoresController : ControllerBase
     {
         private readonly ApplicationDbContext context;
+        private readonly IServicio servicio;
+        private readonly ServicioTransient servicioTransient;
+        private readonly ServicioScoped servicioScoped;
+        private readonly ServicioSingleton servicioSingleton;
+        private readonly ILogger<AutoresController> logger;
 
-        public AutoresController(ApplicationDbContext context)
+        public AutoresController(ApplicationDbContext context, IServicio servicio, ServicioTransient servicioTransient,
+                                 ServicioScoped servicioScoped, ServicioSingleton servicioSingleton, ILogger<AutoresController> logger)
         {
+            this.logger = logger;
             this.context = context;
-
+            this.servicio = servicio;
+            this.servicioTransient = servicioTransient;
+            this.servicioScoped = servicioScoped;
+            this.servicioSingleton = servicioSingleton;
         }
 
-        /* [HttpGet("Data")]
-        public List<Autor> GetAutors()
+        [HttpGet("Guid")]
+        public ActionResult ObtenerGuids()
         {
-            return context.Autores.ToList();
-        } */
+            logger.LogInformation("Estamos obteniendo los GUIDS");
+            return Ok(new
+            {
+                AutoresControllerTransient = servicioTransient.Guid,
+                ServcioA_Transiente = servicio.ObtenerTransient(),
+                AutoresControllerScoped = servicioScoped.Guid,
+                ServcioA_Scoped = servicio.ObtenerScoped(),
+                AutoresControllerSingleton = servicioSingleton.Guid,
+                ServcioA_Singleton = servicio.ObtenerSingleton()
+            });
+        }
 
         [HttpGet("{id:int}/{name?}")] // api/autores/id => Route
         public async Task<ActionResult<Autor>> Get(int id, string name)
         {
-            return await context.Autores.Include(a => a.Libros).FirstOrDefaultAsync( a => a.Id == id || a.Nombre.Contains(name));
+            return await context.Autores.Include(a => a.Libros).FirstOrDefaultAsync(a => a.Id == id || a.Nombre.Contains(name));
         }
 
         [HttpGet]
@@ -40,9 +60,9 @@ namespace PruebeVC.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(Autor autor)
         {
-            var exiteAutorConElMismoNombre = await context.Autores.AnyAsync( a => a.Nombre == autor.Nombre );
+            var exiteAutorConElMismoNombre = await context.Autores.AnyAsync(a => a.Nombre == autor.Nombre);
 
-            if(exiteAutorConElMismoNombre)
+            if (exiteAutorConElMismoNombre)
             {
                 return BadRequest("Ya exite el registro a crear");
             }
@@ -57,7 +77,7 @@ namespace PruebeVC.Controllers
         {
             var exist = await context.Autores.AnyAsync(a => a.Id == autor.Id);
 
-            if(!exist)
+            if (!exist)
             {
                 return NotFound("The register inserted not exist");
             }
@@ -72,12 +92,12 @@ namespace PruebeVC.Controllers
         {
             var exist = await context.Autores.AnyAsync(a => a.Id == id);
 
-            if(!exist)
+            if (!exist)
             {
                 return NotFound("The register inserted not exist");
             }
 
-            context.Autores.Remove(new Autor(){Id = id});
+            context.Autores.Remove(new Autor() { Id = id });
             await context.SaveChangesAsync();
             return Ok();
         }

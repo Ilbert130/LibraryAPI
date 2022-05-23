@@ -18,7 +18,9 @@ namespace PruebeVC.Models
         [CreditCard]
         [NotMapped]
         public string CrediCard { get; set; }
+        [NotMapped]
         public int Menor { get; set; }
+        [NotMapped]
         public int Mayor { get; set; }
         public List<Libro> Libros { get; set; }
 

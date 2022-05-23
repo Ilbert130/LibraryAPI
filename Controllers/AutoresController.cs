@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PruebeVC.Filter;
 using PruebeVC.Models;
 using PruebeVC.Servicios;
 
@@ -28,9 +30,12 @@ namespace PruebeVC.Controllers
         }
 
         [HttpGet("Guid")]
+        [ServiceFilter(typeof(MiFiltroDeAccion))]
         public ActionResult ObtenerGuids()
         {
+            //throw  new NotImplementedException();
             logger.LogInformation("Estamos obteniendo los GUIDS");
+            logger.LogWarning("Only this log is going to print");
             return Ok(new
             {
                 AutoresControllerTransient = servicioTransient.Guid,
@@ -51,6 +56,7 @@ namespace PruebeVC.Controllers
         [HttpGet]
         [HttpGet("listado")] // api/autores/listado => Route
         [HttpGet("/listado")] // listtado => Route
+        [Authorize]
         public async Task<ActionResult<List<Autor>>> Get()
         {
             var listAutor = await context.Autores.Include(a => a.Libros).ToListAsync();

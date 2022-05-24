@@ -15,7 +15,7 @@ namespace PruebeVC.Controllers
 
         }
 
-        [HttpGet]
+        /* [HttpGet]
         public async Task<ActionResult<List<Libro>>> Get()
         {
             var listLibro = await context.Libros.Include(l => l.Autor).ToListAsync();
@@ -27,7 +27,7 @@ namespace PruebeVC.Controllers
         {
             var listLibro = await context.Libros.Include(l => l.Autor).FirstOrDefaultAsync(l => l.AutorId == id);
             return listLibro;
-        }
+        } */
 
         [HttpPost]
         public async Task<ActionResult> Post(Libro libro)

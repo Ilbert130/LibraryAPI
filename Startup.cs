@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using PruebeVC.Controllers;
 using PruebeVC.Filter;
 using PruebeVC.Middlewares;
-using PruebeVC.Servicios;
 
 namespace PruebeVC
 {
@@ -28,13 +27,6 @@ namespace PruebeVC
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
 
-            services.AddTransient<IServicio, ServicioA>();
-            services.AddTransient<ServicioTransient>();
-            services.AddScoped<ServicioScoped>();
-            services.AddSingleton<ServicioSingleton>();
-
-            services.AddTransient<MiFiltroDeAccion>();
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -46,14 +38,6 @@ namespace PruebeVC
         {
             app.LoguearRespuestaHTTP();
             //app.UseMiddleware<LoguearRespuestaHTTPMiddleware>();
-
-            app.Map("/ruta1", app =>
-            {
-                app.Run(async contexto =>
-                {
-                    await contexto.Response.WriteAsync("Estoy interceptando la tuberia");
-                });
-            });
 
             // Configure the HTTP request pipeline.
             if (env.IsDevelopment())

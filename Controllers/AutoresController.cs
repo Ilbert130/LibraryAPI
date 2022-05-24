@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PruebeVC.Filter;
 using PruebeVC.Models;
-using PruebeVC.Servicios;
 
 namespace PruebeVC.Controllers
 {
@@ -12,56 +11,24 @@ namespace PruebeVC.Controllers
     public class AutoresController : ControllerBase
     {
         private readonly ApplicationDbContext context;
-        private readonly IServicio servicio;
-        private readonly ServicioTransient servicioTransient;
-        private readonly ServicioScoped servicioScoped;
-        private readonly ServicioSingleton servicioSingleton;
-        private readonly ILogger<AutoresController> logger;
 
-        public AutoresController(ApplicationDbContext context, IServicio servicio, ServicioTransient servicioTransient,
-                                 ServicioScoped servicioScoped, ServicioSingleton servicioSingleton, ILogger<AutoresController> logger)
+        public AutoresController(ApplicationDbContext context)
         {
-            this.logger = logger;
             this.context = context;
-            this.servicio = servicio;
-            this.servicioTransient = servicioTransient;
-            this.servicioScoped = servicioScoped;
-            this.servicioSingleton = servicioSingleton;
         }
 
-        [HttpGet("Guid")]
-        [ServiceFilter(typeof(MiFiltroDeAccion))]
-        public ActionResult ObtenerGuids()
-        {
-            //throw  new NotImplementedException();
-            logger.LogInformation("Estamos obteniendo los GUIDS");
-            logger.LogWarning("Only this log is going to print");
-            return Ok(new
-            {
-                AutoresControllerTransient = servicioTransient.Guid,
-                ServcioA_Transiente = servicio.ObtenerTransient(),
-                AutoresControllerScoped = servicioScoped.Guid,
-                ServcioA_Scoped = servicio.ObtenerScoped(),
-                AutoresControllerSingleton = servicioSingleton.Guid,
-                ServcioA_Singleton = servicio.ObtenerSingleton()
-            });
-        }
-
-        [HttpGet("{id:int}/{name?}")] // api/autores/id => Route
+        /* [HttpGet("{id:int}/{name?}")] // api/autores/id => Route
         public async Task<ActionResult<Autor>> Get(int id, string name)
         {
             return await context.Autores.Include(a => a.Libros).FirstOrDefaultAsync(a => a.Id == id || a.Nombre.Contains(name));
         }
 
         [HttpGet]
-        [HttpGet("listado")] // api/autores/listado => Route
-        [HttpGet("/listado")] // listtado => Route
-        [Authorize]
         public async Task<ActionResult<List<Autor>>> Get()
         {
             var listAutor = await context.Autores.Include(a => a.Libros).ToListAsync();
             return listAutor;
-        }
+        } */
 
         [HttpPost]
         public async Task<ActionResult> Post(Autor autor)

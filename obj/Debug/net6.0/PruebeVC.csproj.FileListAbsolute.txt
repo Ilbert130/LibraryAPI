@@ -60,3 +60,5 @@ C:\Users\Ilbert Castillo\Documents\CursoAPIRest\ApiProyects\PruebeVC\obj\Debug\n
 C:\Users\Ilbert Castillo\Documents\CursoAPIRest\ApiProyects\PruebeVC\bin\Debug\net6.0\Humanizer.dll
 C:\Users\Ilbert Castillo\Documents\CursoAPIRest\ApiProyects\PruebeVC\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Ilbert Castillo\Documents\CursoAPIRest\ApiProyects\PruebeVC\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Ilbert Castillo\Documents\CursoAPIRest\ApiProyects\PruebeVC\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Ilbert Castillo\Documents\CursoAPIRest\ApiProyects\PruebeVC\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

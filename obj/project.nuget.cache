@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "TireVKNQe3e0FDVPDWgGWXaZkfxQb0zP1zLLLkrdewRQgetrMTv8+jP29l32Ltg5Hh+mlz7M7D7K5j1DgvWkww==",
+  "dgSpecHash": "jB1GuVJ3cBPiAEeRC3WpxXc23wByodtZxTIR45bEQJFCQbbwlrTk5cDLQcZ2iW9DkDa+i3iimwf6O1dEXYMHKA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Ilbert Castillo\\Documents\\CursoAPIRest\\ApiProyects\\PruebeVC\\PruebeVC.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
+    "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.5\\microsoft.aspnetcore.authentication.jwtbearer.6.0.5.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\Ilbert Castillo\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.5\\microsoft.entityframeworkcore.6.0.5.nupkg.sha512",

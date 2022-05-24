@@ -1,14 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using PruebeVC.Validations;
 
-namespace PruebeVC.Models
+namespace PruebeVC.DTOs
 {
-    public class Libro
+    public class LibroCreacionDTO
     {
-        public int Id { get; set; }
         [UpperFirstLetter]
         [StringLength(maximumLength:250)]
         public string Titulo {get; set;}
-        public List<Comentario> Comentarios {get;set;}
     }
 }

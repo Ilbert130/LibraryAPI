@@ -1,16 +1,13 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using PruebeVC.Validations;
 
-namespace PruebeVC.Models
+namespace PruebeVC.DTOs
 {
-    public class Autor
+    public class AutorCreacionDTO
     {
-        public int Id { get; set; }
         [Required]
         [StringLength(maximumLength:50)]
         [UpperFirstLetter(ErrorMessage = "La letra ingresada al principio es minuscula")]
-        public string Nombre { get; set; }
-
+        public string Nombre {get;set;}
     }
 }

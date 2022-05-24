@@ -1,7 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PruebeVC.Filter;
+using PruebeVC.DTOs;
 using PruebeVC.Models;
 
 namespace PruebeVC.Controllers
@@ -11,34 +12,39 @@ namespace PruebeVC.Controllers
     public class AutoresController : ControllerBase
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
 
-        public AutoresController(ApplicationDbContext context)
+        public AutoresController(ApplicationDbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
-        /* [HttpGet("{id:int}/{name?}")] // api/autores/id => Route
-        public async Task<ActionResult<Autor>> Get(int id, string name)
+        [HttpGet("{name}")] // api/autores/id => Route
+        public async Task<ActionResult<AutorDTO>> Get(string name)
         {
-            return await context.Autores.Include(a => a.Libros).FirstOrDefaultAsync(a => a.Id == id || a.Nombre.Contains(name));
+            var autor = await context.Autores.FirstOrDefaultAsync(a => a.Nombre.Contains(name));
+            return mapper.Map<AutorDTO>(autor);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Autor>>> Get()
+        [HttpGet("list/{name}")]
+        public async Task<ActionResult<List<AutorDTO>>> GetList(string name)
         {
-            var listAutor = await context.Autores.Include(a => a.Libros).ToListAsync();
-            return listAutor;
-        } */
+            var listAutor = await context.Autores.Where(a => a.Nombre.Contains(name)).ToListAsync();
+            return mapper.Map<List<AutorDTO>>(listAutor);
+        }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Autor autor)
+        public async Task<ActionResult> Post(AutorCreacionDTO autorCreacionDTO)
         {
-            var exiteAutorConElMismoNombre = await context.Autores.AnyAsync(a => a.Nombre == autor.Nombre);
+            var exiteAutorConElMismoNombre = await context.Autores.AnyAsync(a => a.Nombre == autorCreacionDTO.Nombre);
 
             if (exiteAutorConElMismoNombre)
             {
                 return BadRequest("Ya exite el registro a crear");
             }
+
+            var autor= mapper.Map<Autor>(autorCreacionDTO);
 
             context.Add(autor);
             await context.SaveChangesAsync();

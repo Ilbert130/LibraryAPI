@@ -11,6 +11,7 @@ namespace PruebeVC.Models
         [StringLength(maximumLength:50)]
         [UpperFirstLetter(ErrorMessage = "La letra ingresada al principio es minuscula")]
         public string Nombre { get; set; }
+        public List<AutorLibro> AutoresLibros {get;set;}
 
     }
 }

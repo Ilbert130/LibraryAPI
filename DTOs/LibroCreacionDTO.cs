@@ -8,5 +8,6 @@ namespace PruebeVC.DTOs
         [UpperFirstLetter]
         [StringLength(maximumLength:250)]
         public string Titulo {get; set;}
+        public List<int> AutoresIds {get;set;}
     }
 }

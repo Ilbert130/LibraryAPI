@@ -29,21 +29,38 @@ namespace PruebeVC.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<LibroDTO>> Get(int id)
         {
-            var libro = await context.Libros.FirstOrDefaultAsync(l => l.Id == id);
+            var libro = await context.Libros.Include(lb => lb.AutoresLibros)
+            .ThenInclude(al => al.Autor).FirstOrDefaultAsync(l => l.Id == id);
+
+            libro.AutoresLibros = libro.AutoresLibros.OrderByDescending(x => x.Orden).ToList();
+
             return mapper.Map<LibroDTO>(libro);
         } 
 
         [HttpPost]
         public async Task<ActionResult> Post(LibroCreacionDTO libroCreacionDTO)
         {
-            var exist = await context.Libros.AnyAsync(l => l.Titulo == libroCreacionDTO.Titulo);
-
-            if(exist)
+            if(libroCreacionDTO.AutoresIds == null)
             {
-                return BadRequest("The register inserted exist");
+                return BadRequest("Doesn't can creat a libro withaout autores");
+            }
+
+            var autores = await context.Autores.Where(aut => libroCreacionDTO.AutoresIds.Contains(aut.Id)).Select(x => x.Id).ToListAsync();
+
+            if(libroCreacionDTO.AutoresIds.Count != autores.Count)
+            {
+                return BadRequest("The register inserted not exist");
             }
 
             var libro = mapper.Map<Libro>(libroCreacionDTO);
+
+            if(libro.AutoresLibros != null)
+            {
+                for(int i = 0; i< libro.AutoresLibros.Count; i++)
+                {
+                    libro.AutoresLibros[i].Orden = i;
+                }
+            }
 
             context.Libros.Add(libro);
             await  context.SaveChangesAsync();
